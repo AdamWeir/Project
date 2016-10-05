@@ -1,0 +1,56 @@
+int columns = 15;
+int rows = 24;
+int size = 25; //size of squares
+float r = 0; //total rotation value
+int margin = 50;
+float v; //random value for translation and rotation
+float a;
+int x = 1;
+float speed = 0;
+float gravity = 0.1;
+float y;
+float j;
+Object o;
+
+void setup() {
+  size(500, 700);
+  o = new Object();
+}
+
+void draw() {
+  background(#000000);
+  o.update;
+  o.display;
+}
+
+
+class Object {
+  PVector location;  
+  PVector velocity; 
+  PVector acceleration;
+
+  Object() {
+    location = new PVector(width/2, height/2);
+    velocity = new PVector(0, 0);
+    acceleration = new PVector(0, 0.1);
+  }
+
+  void update() {
+    velocity.add(acceleration);
+    location.add(velocity);
+  }
+
+  void display() {
+    for (int y=1; y<=rows; y++) {
+      r =r+(y*0.25); //as y increases, the rotation value increases
+      for (int x=1; x<=columns; x++) {
+        pushMatrix();
+        v = random(-r, r);
+        translate(margin+(x*size)+(v*.35), margin+(y*size)+(v*.35));
+        rotate(radians(random(r))); //converts random rotation value r (degrees) into radians
+        rect(x, y, size, size);
+        popMatrix();
+      }
+    }
+  }
+}
